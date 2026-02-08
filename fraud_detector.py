@@ -1,9 +1,8 @@
 from kafka import KafkaConsumer
 import json
 
-# Connect to the Kafka "Conveyor Belt"
 consumer = KafkaConsumer(
-    'transactions',  # <--- Matches your Producer's topic name
+    'transactions', 
     bootstrap_servers='localhost:9092',
     auto_offset_reset='latest',
     value_deserializer=lambda x: json.loads(x.decode('utf-8'))
@@ -15,9 +14,8 @@ for message in consumer:
     transaction = message.value
     amount = transaction['amount']
     city = transaction['city']
-    
-    # RULE: If amount is > 40,000, flag it!
+
     if amount > 40000:
-        print(f"🚨 FRAUD ALERT! High Value: ₹{amount} in {city}")
+        sms.send(phone_number, "Did you just spend ₹40,000? Reply YES or NO.")
     else:
         print(f"✅ Legit: ₹{amount}")
