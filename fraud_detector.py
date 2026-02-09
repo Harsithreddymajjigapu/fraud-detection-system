@@ -19,7 +19,7 @@ consumer = KafkaConsumer(
     value_deserializer=lambda x: json.loads(x.decode('utf-8'))
 )
 
-print(" Smart Fraud Detector Started... Watching Stream...")
+print(" Smart Fraud Detector Started... Watching for trancastions")
 
 for message in consumer:
     transaction = message.value
