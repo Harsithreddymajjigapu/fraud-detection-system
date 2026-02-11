@@ -11,7 +11,7 @@ producer = KafkaProducer(
     value_serializer=lambda x: json.dumps(x).encode('utf-8')
 )
 
-print("💳 Credit Card Terminal Started... (Press Ctrl+C to stop)")
+print(" Credit Card Terminal Started... (Press Ctrl+C to stop)")
 
 while True:
     transaction = {
