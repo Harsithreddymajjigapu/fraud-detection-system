@@ -5,7 +5,6 @@ import joblib
 import os
 from tensorflow.keras.models import load_model
 
-# --- 1. LOAD THE NEW BRAIN ---
 print("🧠 Loading Deep Learning Model & Scaler...")
 try:
     model = load_model('fraud_dl_model.keras')
@@ -15,7 +14,6 @@ except:
     print("❌ Error: Files missing! Did you run 'python train_deep_model.py'?")
     exit()
 
-# --- 2. CONNECT TO KAFKA ---
 consumer = KafkaConsumer(
     'transactions',
     bootstrap_servers='localhost:9092',
@@ -25,11 +23,9 @@ consumer = KafkaConsumer(
 
 print("👮 Deep Learning Detector Started... Analyzing Risk Probabilities...")
 
-# --- 3. START MONITORING ---
 for message in consumer:
     transaction = message.value
     
-    # A. Pre-process (Scale the data exactly like we trained it)
     features = np.array([[transaction['amount']]])
     features_scaled = scaler.transform(features)
     
@@ -40,8 +36,7 @@ for message in consumer:
         alert_msg = f"🚨 FRAUD DETECTED: ₹{transaction['amount']} (Risk: {confidence_percent:.2f}%)"
         print(alert_msg)
         
-        # Log to file
-        with open("fraud_logs.txt", "a") as f:
+        with open("fraud_logs.txt", "a", encoding='utf-8') as f:
             f.write(f"{alert_msg} in {transaction['city']}\n")
             
     else:
