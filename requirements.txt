@@ -1,0 +1,7 @@
+kafka-python
+tensorflow
+pymongo
+scikit-learn
+faker
+streamlit
+joblib
