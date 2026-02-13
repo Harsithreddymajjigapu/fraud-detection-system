@@ -5,13 +5,13 @@ import joblib
 import os
 from tensorflow.keras.models import load_model
 
-print("🧠 Loading Deep Learning Model & Scaler...")
+print(" Loading Deep Learning Model & Scaler...")
 try:
     model = load_model('fraud_dl_model.keras')
     scaler = joblib.load('scaler.pkl')
-    print("✅ Neural Network Loaded Successfully!")
+    print(" Neural Network Loaded Successfully!")
 except:
-    print("❌ Error: Files missing! Did you run 'python train_deep_model.py'?")
+    print(" Error: Files missing! Did you run 'python train_deep_model.py'?")
     exit()
 
 consumer = KafkaConsumer(
@@ -41,4 +41,4 @@ for message in consumer:
             
     else:
         safe_percent = (1 - risk_score) * 100
-        print(f"✅ Legit: ₹{transaction['amount']} (Safe: {safe_percent:.2f}%)")
+        print(f" Legit: ₹{transaction['amount']} (Safe: {safe_percent:.2f}%)")
