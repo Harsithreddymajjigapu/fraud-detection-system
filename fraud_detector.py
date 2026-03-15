@@ -21,7 +21,7 @@ consumer = KafkaConsumer(
     value_deserializer=lambda x: json.loads(x.decode('utf-8'))
 )
 
-print("👮 Deep Learning Detector Started... Analyzing Risk Probabilities...")
+print(" Deep Learning Detector Started... Analyzing Risk Probabilities...")
 
 for message in consumer:
     transaction = message.value
@@ -33,7 +33,7 @@ for message in consumer:
     
     if risk_score > 0.50:
         confidence_percent = risk_score * 100
-        alert_msg = f"🚨 FRAUD DETECTED: ₹{transaction['amount']} (Risk: {confidence_percent:.2f}%)"
+        alert_msg = f" FRAUD DETECTED: ₹{transaction['amount']} (Risk: {confidence_percent:.2f}%)"
         print(alert_msg)
         
         with open("fraud_logs.txt", "a", encoding='utf-8') as f:
